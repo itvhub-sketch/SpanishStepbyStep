@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+
+<p></p>
+<div class="container">
+
+<div class="card-columns">
+  {% for deck in list_of_decks %}
+  <div class="card">
+
+    <a href="/deck/show/{{deck.id}}" >
+      <img src="{% static 'images/FlashCardImage.svg' %}" class="card-img-top" alt="...">
+
+    </a>
+
+    <div class="card-body">
+      <h5 class="card-title">
+        <a href="/deck/show/{{deck.id}}">{{ deck.title }}</a>
+      <a href="/deck/show/{{deck.id}}"
+      <span class="badge badge-primary">
+        {{deck.card_set.all|length}}
+      </a>
+      </span>
+    </h5>
+      <p class="card-text">{{deck.description}}</p>
+
+      <a class="btn btn-info btn-sm" href="/deck/show/{{deck.id}}" role="button">Show</a>
+
+    </div>
+
+    <div class="card-footer">
+      <small class="text-muted"> by {{deck.creator}}
+        · {{ deck.subject }}
+        · <a href="/deck/{{deck.id}}">Edit</a>
+        · <a href="/deck/delete/{{deck.id}}/">Delete</a>
+      </small>
+    </div>
+
+  </div>
+{% endfor %}
+</div>
+
+</div>
+
+<hr>
+
+{% endblock %}

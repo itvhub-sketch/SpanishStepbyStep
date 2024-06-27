@@ -1,0 +1,24 @@
+"""
+Configures the ASGI (Asynchronous Server Gateway Interface) for the 'languages' Django project.
+
+This module-level variable `application` is the entry point for ASGI servers to interface with the Django application.
+
+For more information on ASGI configuration, see the Django documentation:
+https://docs.djangoproject.com/en/4.1/howto/deployment/asgi/
+"""
+"""
+ASGI config for languages project.
+
+It exposes the ASGI callable as a module-level variable named ``application``.
+
+For more information on this file, see
+https://docs.djangoproject.com/en/4.1/howto/deployment/asgi/
+"""
+
+import os
+
+from django.core.asgi import get_asgi_application
+
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'languages.settings')
+
+application = get_asgi_application()

@@ -1,0 +1,77 @@
+"""
+This module defines the Django models for the card designer application. It includes the following models:
+
+Deck:
+    - Represents a deck of cards, with a title, subject, description, and creator.
+    - The `get_absolute_url()` method returns the URL for creating cards for this deck.
+
+Card:
+    - Represents a single card in a deck, with a question, answer, and optional question and answer audio files.
+
+StudySet:
+    - Represents a set of cards that a student is studying.
+
+StudentDeck:
+    - Represents the relationship between a student and a deck of cards they are studying.
+
+LeitnerBox:
+    - Represents a Leitner box, which is a system for spaced repetition of flashcards.
+
+ScoreBoard:
+    - Represents a student's score for a particular card, including the Leitner box it is in and the dates it was updated and last studied.
+"""
+from django.db import models
+from django.contrib.auth.models import User
+from django.urls import reverse
+
+# Create your models here.
+class Deck(models.Model):
+    title = models.CharField(max_length=200)
+    subject = models.CharField(max_length=200)
+    description = models.TextField(max_length=500, blank=True)
+    creator = models.ForeignKey(User, on_delete=models.CASCADE, related_name="creator")
+
+    def __str__(self):
+        return self.title
+
+    def get_absolute_url(self):
+        return reverse('create_cards', kwargs={'deck_id': self.id})
+
+
+class Card(models.Model):
+    question = models.CharField(max_length=200)
+    answer = models.CharField(max_length=200)
+    deck = models.ForeignKey(Deck, on_delete=models.CASCADE)
+    question_audio = models.CharField(max_length=255, blank=True, null=True)
+    answer_audio = models.CharField(max_length=255, blank=True, null=True)
+
+    def __str__(self):
+        return self.question
+
+
+class StudySet(models.Model):
+    student = models.ForeignKey(User, on_delete=models.CASCADE, related_name="student")
+
+
+class StudentDeck(models.Model):
+    studyset = models.ForeignKey(StudySet, on_delete=models.CASCADE, related_name="studyset")
+    student = models.ForeignKey(User, on_delete=models.CASCADE)
+    deck = models.ForeignKey(Deck, on_delete=models.CASCADE)
+
+
+class LeitnerBox(models.Model):
+    frequency = models.SmallIntegerField()
+
+    def __str__(self):
+        return str(self.frequency)
+
+
+class ScoreBoard(models.Model):
+    student = models.ForeignKey(StudySet, on_delete=models.CASCADE)
+    card = models.ForeignKey(Card, on_delete=models.CASCADE)
+    box = models.ForeignKey(LeitnerBox, on_delete=models.CASCADE)
+    updated = models.DateField()
+    leitner_date = models.DateField()
+
+    def __str__(self):
+        return str(self.card)

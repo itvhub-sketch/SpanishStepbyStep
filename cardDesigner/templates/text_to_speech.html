@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% load static %}
+
+
+{% block content %}
+  <h2>{{ card.question }}</h2>
+  <p>{{ card.answer }}</p>
+
+  <button onclick="playQuestion()">Play Question</button>
+  <button onclick="playAnswer()">Play Answer</button>
+
+  <script>
+    function playQuestion() {
+      // Code to play the question audio
+    }
+
+    function playAnswer() {
+      // Code to play the answer audio
+    }
+  </script>
+{% endblock %}
+
