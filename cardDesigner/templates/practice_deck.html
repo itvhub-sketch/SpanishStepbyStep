@@ -5,7 +5,7 @@
 <div class="container">
     <div class="row">
         {% for card in list_of_cards %}
-        <div class="rehearse_card" id="card-{{ card.id }}">
+        <div class="practice_card" id="card-{{ card.id }}">
             <div class="card text-center" style="width: 30rem;">
                 <img src="{% static 'images/FlashCardImage.svg' %}" class="card-img-top" alt="...">
                 <div class="card-body">
@@ -28,9 +28,38 @@
         </div>
         {% endfor %}
     </div>
-    </div>
-    </div>
 </div>
+
+<!-- Buttons for Next and Previous Card -->
+<div class="row">
+  <div class="col text-center">
+    <button type="button" onclick="showPrevCard();" name="previous" class="btn btn-info btn-sm">❮ Previous</button>
+    <button type="button" onclick="flipCard();" name="flip" class="btn btn-info btn-sm">Flip</button>
+    <button type="button" onclick="showNextCard();" name="next" class="btn btn-info btn-sm">Next ❯</button>
+  </div>
+</div>
+
+<script>
+    // Function to show the previous card
+    function showPrevCard() {
+      if (visibleCard == 0) {
+        visibleCard = $(".practice_card").length - 1;
+      } else {
+        visibleCard--;
+      }
+      showCard();
+    }
+
+    // Function to show the next card
+    function showNextCard() {
+      if (visibleCard == $(".practice_card").length - 1) {
+        visibleCard = 0;
+      } else {
+        visibleCard++;
+      }
+      showCard();
+    }
+</script>
 
 <script>
     function flipCard(cardId) {
@@ -51,7 +80,7 @@
         const questionAudioUrl = button.dataset.questionAudio;
         const answerAudioUrl = button.dataset.answerAudio;
 
-        const url = `/deck/rehearse/${deckId}/text_to_speech/${cardId}/`;
+        const url = `/deck/practice/${deckId}/text_to_speech/${cardId}/`;
 
         fetch(url, {
             method: 'POST',

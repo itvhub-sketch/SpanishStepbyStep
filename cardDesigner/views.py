@@ -175,7 +175,7 @@ def show_deck(request, deck_id):
     return render(request, 'show_deck.html', context)
 
 
-def rehearse_deck(request, deck_id):
+def practice_deck(request, deck_id):
     deck = get_object_or_404(Deck, pk=deck_id)
     c_list = Card.objects.filter(deck=deck)
     context = {
@@ -183,7 +183,7 @@ def rehearse_deck(request, deck_id):
         'deck': deck,
         'audio_enabled': request.GET.get('audio_enabled', False)
     }
-    return render(request, 'rehearse_deck.html', context)
+    return render(request, 'practice_deck.html', context)
 
 
 def save_for_study(request, deck_id):

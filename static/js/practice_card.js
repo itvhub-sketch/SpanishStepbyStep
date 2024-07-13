@@ -1,7 +1,7 @@
 var cardSide = "QuestionSide";
 
 function showCard() {
-    $(".rehearse_card").show();
+    $(".practice_card").show();
 }
 
 function flipCard(cardId) {
@@ -24,7 +24,7 @@ function toggleTextToSpeech(button) {
     const questionAudioUrl = button.dataset.questionAudio;
     const answerAudioUrl = button.dataset.answerAudio;
 
-    const url = `/deck/rehearse/${deckId}/text_to_speech/${cardId}/`;
+    const url = `/deck/practice/${deckId}/text_to_speech/${cardId}/`;
 
     fetch(url, {
         method: 'POST',
@@ -51,7 +51,7 @@ function toggleTextToSpeech(button) {
 
 $(document).ready(function() {
     showCard();
-    $(".rehearse_card").on('click', function() {
+    $(".practicese_card").on('click', function() {
         const cardId = $(this).attr('id').split('-')[1]; // Extract card ID from element ID
         flipCard(cardId);
     });
